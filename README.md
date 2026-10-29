@@ -4,7 +4,7 @@ Offline dictation for Windows. Press one shortcut, speak, and the text lands in
 whatever app has focus. English and Hinglish, no account, no quota, and no audio
 leaving the machine.
 
-![Speaky settings window](screenshots/settings.png)
+<img src="screenshots/settings.png" width="620" alt="Speaky settings window">
 
 ![The recording overlay in its idle and listening states](screenshots/overlay.png)
 
