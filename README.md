@@ -21,7 +21,8 @@ download. After that it works with the network unplugged.
   takes. The mode is a setting, the shortcut is the same.
 - **English and Hinglish.** Hindi speech comes out in Latin script:
   `mujhe kal meeting hai`, never `मुझे कल मीटिंग है`. English loanwords inside a
-  Hindi sentence keep their normal spelling.
+  Hindi sentence keep their normal spelling. Speech detected as another language
+  is ignored, not typed.
 - **Text goes where you are typing.** Speaky remembers the focused window when
   you press the shortcut, then pastes or types the transcript into it, even if the
   overlay had focus in between.
@@ -96,8 +97,11 @@ shortcut ──► record 16 kHz mono ──► whisper-server (local) ──►
   recognizer crash cannot take the tray app down, and "unload the model" is just
   killing the process. Silero VAD trims silence before decoding.
 - **Hinglish.** Whisper often answers Hindi speech in Devanagari. Speaky
-  transliterates it to Latin script and then repairs English loanwords that the
-  transliteration would have mangled, using a guard list of common words.
+  romanizes it with a rule engine (anusvara assimilation, conjuncts, nukta,
+  word-final schwa) plus a lexicon for the spellings rules cannot infer
+  (`karna`, `mein`, `tumne`), then restores English loanwords that were written
+  in Devanagari. A second gate drops any take that whisper identifies as a
+  language other than English or Hindi.
 - **Insertion.** The transcript is either pasted (fast) or sent as Unicode
   keystrokes (works in apps that block paste). Both target the window that was
   focused when you pressed the shortcut. The last insertion can be undone from the
@@ -132,6 +136,8 @@ GPU is available and falls back to the CPU otherwise.
 - Windows only; the audio, injection, and overlay code is Win32-specific.
 - One utterance per request: text arrives when you stop, not while you speak.
 - Hinglish output is romanized Latin. Devanagari is not an output option.
+- English and Hinglish only. Speech detected as another language is ignored and
+  the pill says so.
 - A recording stops at five minutes.
 - The build is unsigned, so SmartScreen may warn the first time. Choose *More
   info → Run anyway*.
